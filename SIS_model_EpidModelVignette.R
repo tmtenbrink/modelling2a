@@ -1,5 +1,8 @@
 #independent SIS model
 
+ install.packages("EpiModel", dependencies = TRUE)
+ library("EpiModel")
+
 #Estimating network structure
 
 #maak een netwerk (zonder verbindingen) nw met 1000 nodes (personen in dit model) 
@@ -24,3 +27,52 @@ formation <- ~edges + nodefactor("risk") + nodematch("risk") + concurrent
 target.stats <- c(250, 375, 225, 100)
 
 coef.diss <- dissolution_coefs(dissolution = ~offset(edges), duration = 80)
+
+print(coef.diss)
+
+est1 <- netest(nw, formation, target.stats, coef.diss)
+
+dx <- netdx(est1, nsims = 10, nsteps = 1000)
+
+print(dx)
+
+plot(dx)
+
+par(mfrow = c(1, 2))
+plot(dx, type = "duration")
+plot(dx, type = "dissolution")
+
+init <- init.net(i.num = 50)
+
+param <- param.net(inf.prob = 0.1, act.rate = 5, rec.rate = 0.02)
+
+control <- control.net(type = "SIS", nsteps = 500, nsims = 10, epi.by = "risk")
+
+sim1 <- netsim(est1, param, init, control)
+
+print(sim1)
+
+summary(sim1, at = 500)
+
+plot(sim1)
+
+plot(sim1, y = c("si.flow", "is.flow"), leg = TRUE)
+
+plot(sim1, y = c("i.num.risk0", "i.num.risk1"), leg = TRUE)
+
+ par(mfrow = c(1,2), mar = c(0,0,1,0))
+ plot(sim1, type = "network", at = 1, sims = "mean", col.status = TRUE, main = "Prevalence at t1")
+ plot(sim1, type = "network", at = 500, sims = "mean", col.status = TRUE, main = "Prevalence at t500")
+
+
+
+
+
+
+
+
+
+
+
+
+
