@@ -42,11 +42,11 @@ par(mfrow = c(1, 2))
 plot(dx, type = "duration")
 plot(dx, type = "dissolution")
 
-init <- init.net(i.num = 50)
+init <- init.net(i.num = 50,r.num = 0)
 
 param <- param.net(inf.prob = 0.1, act.rate = 5, rec.rate = 0.02)
 
-control <- control.net(type = "SIS", nsteps = 500, nsims = 10, epi.by = "risk")
+control <- control.net(type = "SIR", nsteps = 500, nsims = 10, epi.by = "risk")
 
 sim1 <- netsim(est1, param, init, control)
 
@@ -56,14 +56,14 @@ summary(sim1, at = 500)
 
 plot(sim1)
 
-plot(sim1, y = c("si.flow", "is.flow"), leg = TRUE)
+plot(sim1, y = c("si.flow", "is.flow"))
 
-plot(sim1, y = c("i.num.risk0", "i.num.risk1"), leg = TRUE)
+plot(sim1, y = c("i.num.risk0", "i.num.risk1"))
 
- par(mfrow = c(1,2), mar = c(0,0,1,0))
- plot(sim1, type = "network", at = 1, sims = "mean", col.status = TRUE, main = "Prevalence at t1")
- plot(sim1, type = "network", at = 500, sims = "mean", col.status = TRUE, main = "Prevalence at t500")
-
+par(mfrow = c(1,2), mar = c(0,0,1,0))
+plot(sim1, type = "network", at = 1, sims = "mean", col.status = TRUE, main = "Prevalence at t1")
+plot(sim1, type = "network", at = 500, sims = "mean", col.status = TRUE, main = "Prevalence at t500")
+par(mfrow = c(1,1), mar = c(0,0,1,0))
 
 
 
