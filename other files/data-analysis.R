@@ -49,7 +49,7 @@ plot(active$day, active$active, type="l", main="Estimated active cases versus mo
      ylab="Number of active cases", col='indianred4', xlim=as.Date(c('2020-03-20', '2020-06-03'), "%Y-%m-%d"))
 legend("topright",legend=c("Estimated cases", "Modeled cases"),lty=1:2, col=c("indianred4","red"))
 
-sim = read.table(text = gsub("\\s+", "\t", readLines("80-023-0445simi.txt")))
+sim = read.table(text = gsub("\\s+", "\t", readLines("inum1.txt")))
 
 sim_l = length(sim$sim1)
 avg_sim = numeric(sim_l)
